@@ -63,9 +63,9 @@ kramdown:
 # Gitalk
 gitalk:
   enable: true    
-  clientID: 1802982449c087116c6b                           
-  clientSecret: 649c9704f82e9a40c96ac5be9531ab9e11919ebc 
-  repo: nab1010.github.io  
+  clientID: 317e97e3e7af938d49e6                           
+  clientSecret: d2e3d1c2b5909ed4954ba22f373b7a10d38d6e22 
+  repo: issue_nabblog
   owner: nab1010    
   admin: nab1010
   distractionFreeMode: true 
