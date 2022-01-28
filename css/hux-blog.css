@@ -228,11 +228,14 @@ body.dark{
 }
 .list-inline.dev-icons {
   font-size: 1.5em;
+  transition: all 0.3s cubic-bezier(0.54, 1.06, 0, 0.59) 0s;
 }
 
 
+
+
 .devicon-python-plain:hover{
-  color:#fede57
+  color:#dabf47
 }
 .devicon-c-plain:hover{
   color: #0d599c;
