@@ -229,11 +229,61 @@ body.dark{
 .list-inline.dev-icons {
   font-size: 1.5em;
 }
-.list-inline.dev-icons li>i:hover {
-  color:#dc0000
+
+
+.devicon-python-plain:hover{
+  color:#fede57
 }
-.dark .list-inline.dev-icons li>i:hover {
-  color:#fff900
+.devicon-c-plain:hover{
+  color: #0d599c;
+}
+.devicon-cplusplus-plain:hover{
+  color: #9c023a;
+}
+.devicon-html5-plain:hover{
+  color: #e44d25;
+}
+.devicon-css3-plain:hover{
+  color: #1572b6;
+}
+.devicon-javascript-plain:hover{
+  color: #f0db4f
+}
+.devicon-matlab-plain:hover{
+  color: #f77a42:
+}
+.devicon-php-plain:hover{
+  color: #6181b6;
+}
+.devicon-mysql-plain-wordmark:hover{
+  color: #0a608a;
+}
+.devicon-visualstudio-plain:hover{
+  color: #2489ca;
+}
+.devicon-tensorflow-original:hover{
+  color: #fe6f00;
+}
+.devicon-ubuntu-plain:hover{
+  color: #dd4814;
+}
+.fa.fa-file-word-o:hover{
+  color: #29538f;
+}
+.fa.fa-file-excel-o:hover{
+  color: #096631;
+}
+.fa.fa-file-powerpoint-o:hover{
+  color: #b13216;
+}
+.devicon-photoshop-plain:hover{
+  color: #80b5e1;
+}
+.devicon-aftereffects-plain:hover{
+  color: #1f0740;
+}
+.devicon-premierepro-plain:hover{
+  color: #2a0634;
 }
 .search-page {
   position: fixed;
