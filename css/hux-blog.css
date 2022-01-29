@@ -175,7 +175,7 @@ body.dark{
   background-color: #0e131d;
 }
 body::-webkit-scrollbar{
-  width: 20px;
+  width: 10px;
   background-color: #F5F5F5;
 }
 body::-webkit-scrollbar-track {
