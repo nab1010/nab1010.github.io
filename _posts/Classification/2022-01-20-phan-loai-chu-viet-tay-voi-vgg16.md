@@ -8,7 +8,7 @@ header-img: "img/in-post/2022/Jan/Classification/Post-1/header-img.jpg"
 header-mask: 0.4
 lang: vi
 catalog: true
-# hidden: false
+hidden: true
 section:  Classification
 seo-keywords:
   - vgg16 là gì
