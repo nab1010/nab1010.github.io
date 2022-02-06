@@ -7,12 +7,12 @@ description: "NAB Blog | Machine Learning, Deeplearning, Computer Vision | This 
 keyword: "nabblog,nabblog.me,machinelearning,deeplearning,tri tue nhan tao,hoc sau,machine learning,deep learning,ai blog,thi giac may tinh,computer vision,ai viet nam,train google colab"
 url: "https://nabblog.me"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
-github_repo: "https://github.com/nab1010/nab1010.github.io.git" # you code repository
+github_repo: "https://github.com/nabang1010/nabang1010.github.io.git" # you code repository
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
 sidebar-about-description: "NAB <br> Hanoi University of Science and Technology"
-sidebar-avatar: https://github.com/nab1010.png # use absolute URL, seeing it's used in both `/` and `/about/`
+sidebar-avatar: https://github.com/nabang1010.png # use absolute URL, seeing it's used in both `/` and `/about/`
 theme_default: "automatic"
 
 
@@ -21,10 +21,10 @@ theme_default: "automatic"
 RSS: false
 # weibo_username:     
 # zhihu_username:     
-github_username:    nab1010
+github_username:    nabang1010
 # twitter_username:   
-facebook_username:  nab1010
-linkedin_username:  nab1010
+facebook_username:  nabang1010
+linkedin_username:  nabang1010
 
 
 
@@ -66,8 +66,8 @@ gitalk:
   clientID: 317e97e3e7af938d49e6                           
   clientSecret: d2e3d1c2b5909ed4954ba22f373b7a10d38d6e22 
   repo: issue_nabblog
-  owner: nab1010    
-  admin: nab1010
+  owner: nabang1010    
+  admin: nabang1010
   distractionFreeMode: true 
 
 
