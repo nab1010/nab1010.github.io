@@ -3,7 +3,7 @@ layout: post
 title: "YOLOv1"
 subtitle: "YOLOv1 - You Only Look Once"
 author: "NAB"
-header-img: "img/in-post/2022/Jan/Knowledge/Post-3/ubuntu-gb.png"
+header-img: "img/in-post/2022/Oct/yolov1.png"
 # header-style: text
 header-mask: 0.4
 lang: vi
