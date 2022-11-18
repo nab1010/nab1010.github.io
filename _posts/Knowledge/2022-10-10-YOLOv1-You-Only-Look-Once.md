@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "YOLOv1"
-subtitle: "YOLOv1 - You Only Look Once"
+title: "YOLOv1: Unified, Real-Time Object Detection"
+subtitle: "YOLOv1 - You Only Look Once: Unified, Real-Time Object Detection"
 author: "NAB"
 header-img: "img/in-post/2022/Oct/yolov1.png"
 # header-style: text
