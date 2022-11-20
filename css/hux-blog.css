@@ -281,7 +281,7 @@ body::-webkit-scrollbar-thumb {
   color: #f34f29;
 }
 .devicon-github-original:hover{
-  color: #ffffff;
+  color: #000000;
 }
 .devicon-opencv-plain:hover{
   color: #2489ca;
@@ -301,6 +301,12 @@ body::-webkit-scrollbar-thumb {
 .devicon-ubuntu-plain:hover{
   color: #dd4814;
 }
+.devicon-bash-plain:hover{
+  color: #293138;
+  /* # add cover  */
+  background-color: #ffffff;
+}
+
 .fa.fa-file-word-o:hover{
   color: #29538f;
 }
