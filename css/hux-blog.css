@@ -271,7 +271,7 @@ body::-webkit-scrollbar-thumb {
 .devicon-php-plain:hover{
   color: #6181b6;
 }
-.devicon-mysql-plain-wordmark:hover{
+.devicon-mysql-plain:hover{
   color: #0a608a;
 }
 .devicon-visualstudio-plain:hover{
@@ -303,8 +303,9 @@ body::-webkit-scrollbar-thumb {
 }
 .devicon-bash-plain:hover{
   color: #293138;
-  /* # add cover  */
+  /*add circle cover  */
   background-color: #ffffff;
+  border-radius: 50%;
 }
 
 .fa.fa-file-word-o:hover{
