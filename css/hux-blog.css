@@ -280,6 +280,9 @@ body::-webkit-scrollbar-thumb {
 .devicon-tensorflow-original:hover{
   color: #fe6f00;
 }
+.devicon-pytorch-original:hover{
+  color: #e24829;
+}
 .devicon-ubuntu-plain:hover{
   color: #dd4814;
 }
