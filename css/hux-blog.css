@@ -282,6 +282,8 @@ body::-webkit-scrollbar-thumb {
 }
 .devicon-github-original:hover{
   color: #000000;
+  background-color: #ffffff;
+  border-radius: 50%;
 }
 .devicon-opencv-plain:hover{
   color: #2489ca;
@@ -290,7 +292,9 @@ body::-webkit-scrollbar-thumb {
   color: #4d77cf;
 }
 .devicon-pandas-original:hover{
-  color: #2600ff;
+  color: #120750;
+  background-color: #ffffff;
+  border-radius: 50%;
 }
 .devicon-tensorflow-original:hover{
   color: #ff0000;
@@ -303,7 +307,11 @@ body::-webkit-scrollbar-thumb {
 }
 .devicon-bash-plain:hover{
   color: #293138;
-  /*add circle cover  */
+  background-color: #ffffff;
+  border-radius: 50%;
+}
+.devicon-markdown-original:hover{
+  color: #000;
   background-color: #ffffff;
   border-radius: 50%;
 }
