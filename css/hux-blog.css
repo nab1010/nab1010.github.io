@@ -277,6 +277,12 @@ body::-webkit-scrollbar-thumb {
 .devicon-visualstudio-plain:hover{
   color: #2489ca;
 }
+.devicon-git-plain:hover{
+  color: #f34f29;
+}
+.devicon-github-original:hover{
+  color: #ffffff;
+}
 .devicon-opencv-plain:hover{
   color: #2489ca;
 }
@@ -284,7 +290,7 @@ body::-webkit-scrollbar-thumb {
   color: #4d77cf;
 }
 .devicon-pandas-original:hover{
-  color: #130754;
+  color: #2600ff;
 }
 .devicon-tensorflow-original:hover{
   color: #ff0000;
