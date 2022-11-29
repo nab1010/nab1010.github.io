@@ -63,7 +63,7 @@ mạnh mẽ phủ quyết.
 * Mô hình đánh giá nhị phân lựa chọn giữa đồng ý/không đồng ý hoặc tốt/xấu.
 * Đánh giá đơn nguyên có thể cho biết rằng người dùng đã quan sát hoặc mua một item hoặc người khác đã đánh giá tích cực item đó. Việc không có đánh giá cho thấy rằng chúng ta không có thông tin liên quan đến người dùng với item đó (có lẽ họ đã mua mặt hàng đó ở đâu đó khác).
   
-Đánh giá có thể được thu thập thông qua các *explicit means - ý nghĩa rõ ràng*, *implicit means - ý nghĩa tiềm ẩn* hoặc cả hai. Đánh giá rõ ràng (Explicit Rating) là những thứ mà người dùng được yêu cầu đưa ra ý kiến về một item. Đánh giá ngầm (Implicit Rating) là những đánh giá được suy ra từ hành động của người dùng. Ví dụ, một người dùng truy cập một trang sản phẩm  có thể có mối quan tâm mạnh mẽ hơn nhiều đối với sản phẩm đó. Các vấn đề của các quyết định thiết kế và sự đánh đổi liên quan đén việc thu thập các loại đánh giá khác nhau được thảo luận trong phần 9.4.
+Đánh giá có thể được thu thập thông qua các *explicit means - ý nghĩa rõ ràng*, *implicit means - ý nghĩa tiềm ẩn* hoặc cả hai. Đánh giá rõ ràng (Explicit Rating) là những thứ mà người dùng được yêu cầu đưa ra ý kiến về một item. Đánh giá ngầm (Implicit Rating) là những đánh giá được suy ra từ hành động của người dùng. Ví dụ, một người dùng truy cập một trang sản phẩm  có thể có mối quan tâm mạnh mẽ hơn nhiều đối với sản phẩm đó. Các vấn đề của các quyết định thiết kế và sự đánh đổi liên quan đén việc thu thập các loại đánh giá khác nhau được thảo luận trong [phần](#acquiring-ratings-design-tradeoffs).
 
 ### The Beginning of Collaborative Filtering
 
