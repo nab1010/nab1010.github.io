@@ -32,12 +32,11 @@ Trong nhiều năm, mọi người đã đọc và thảo luận về những cu
 Máy tính và trang web cho phép chúng ta tiến xa hơn nhưng lời truyền miệng. Thay vì giới hạn bản thân trong hàng chục hoặc hàng trăm cá nhân, internet cho phép chúng ta xem xét ý kiến của hàng nghìn người. Tốc độ của máy tính cho phép chúng ta xử  lý những ý kiến này trong thời gian thực và xác định không chỉ cộng đồng lớn hơn nhiều nghĩ gì về một sản phẩm, mà còn phát triển chế độ xem thực sự được cá nhân hóa về mặt hàng đó bằng cách sử dụng các ý kiến phù hợp nhất cho một người dùng hoặc nhóm người dùng nhất định.
 
 ![MovieLens sử dụng tính năng lọc cộng tác để dự đoán rằng người dùng này có khả năng xếp hạng phim "Holes" 4 trên 5 sao.](/img/in-post/2022/Nov/Knowledge/MovieLens_use_CF.png "MovieLens sử dụng tính năng lọc cộng tác để dự đoán rằng người dùng này có khả năng xếp hạng phim "Holes" 4 trên 5 sao.")
-*MovieLens sử dụng tính năng lọc cộng tác để dự đoán rằng người dùng này có khả năng xếp hạng phim "Holes" 4 trên 5 sao.*
+* ***Hình 1:*** MovieLens sử dụng tính năng lọc cộng tác để dự đoán rằng người dùng này có khả năng xếp hạng phim "Holes" 4 trên 5 sao.*
 
 ## Core Concept
 
 Trong khi chương này xem xét nhiều hệ thống CF, chúng tôi giới thiệu chủ đề thông qua MovieLens. MovieLens là một hệ thống lọc cộng tác cho phim. Một user trong MovieLens đánh giá các bộ phim sử dụng 1 đến 5 sao, trong đó 1 là "Awful - Kinh khủng" và 5 là "Must See - Nên xem". MovieLens sau đó sử dụng các đánh giá của cộng động để đề xuất phim khác người dùng có thể quan tâm, dự đoán những gì người dùng đó có thể xếp hạng một bộ phim hoặc thực hiện các tác vụ khác.
-
 
 
 
