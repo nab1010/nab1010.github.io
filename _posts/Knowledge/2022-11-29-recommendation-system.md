@@ -32,7 +32,7 @@ Trong nhiều năm, mọi người đã đọc và thảo luận về những cu
 Máy tính và trang web cho phép chúng ta tiến xa hơn nhưng lời truyền miệng. Thay vì giới hạn bản thân trong hàng chục hoặc hàng trăm cá nhân, internet cho phép chúng ta xem xét ý kiến của hàng nghìn người. Tốc độ của máy tính cho phép chúng ta xử  lý những ý kiến này trong thời gian thực và xác định không chỉ cộng đồng lớn hơn nhiều nghĩ gì về một sản phẩm, mà còn phát triển chế độ xem thực sự được cá nhân hóa về mặt hàng đó bằng cách sử dụng các ý kiến phù hợp nhất cho một người dùng hoặc nhóm người dùng nhất định.
 
 ![MovieLens sử dụng tính năng lọc cộng tác để dự đoán rằng người dùng này có khả năng xếp hạng phim "Holes" 4 trên 5 sao.](/img/in-post/2022/Nov/Knowledge/MovieLens_use_CF.png "MovieLens sử dụng tính năng lọc cộng tác để dự đoán rằng người dùng này có khả năng xếp hạng phim "Holes" 4 trên 5 sao.")
-* ***Hình 1:*** MovieLens sử dụng tính năng lọc cộng tác để dự đoán rằng người dùng này có khả năng xếp hạng phim "Holes" 4 trên 5 sao.*
+*__Hình 1:__ MovieLens sử dụng tính năng lọc cộng tác để dự đoán rằng người dùng này có khả năng xếp hạng phim "Holes" 4 trên 5 sao.*
 
 ## Core Concept
 
