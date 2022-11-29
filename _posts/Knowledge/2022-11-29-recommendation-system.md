@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Recommendation System"
-subtitle: "Recommendation System"
+title: "Collaborative Filtering Recommender Systems "
+subtitle: "Lọc cộng tác trong hệ thống gợi ý"
 author: "NAB"
 header-img: "img/in-post/2022/Oct/yolov1.png"
 # header-style: text
@@ -22,27 +22,15 @@ tags:
 ---
 
 # Abstract
+`Một trong những công nghệ các nhân hóa mạnh mẽ cung cấp sức mạnh cho web là collaborative filtering (CF) - lọc cộng tác. CF là quá trình lọc hoặc đánh giá các items thông qua ý kiến của người khác. Công nghệ CF tập hợp ý kiến của các cộng đồng lớn được kết nối với nhau trên web, hỗ trợ lọc số lượng dữ liệu đáng kể. Trong bài này, các tác giả giới thiệu các khái niệm cốt lõi về lọc cộng tác dùng trong adaptive web, lý thuyết và thực hành thuật toán CF, và các quyết định thiết kế liên quan đến hệ thống đánh giá và thu thập đánh giá, Các tác giả cũng thảo luận về cách đánh giá hệ thống CF và sự phát triển của các giao diện tương tác. `
+# Introduction
 
-# Content-based recommnndation
+Collaborative Filtering là quá trình lọc hoặc đánh giá các items sử dụng ý kiến của người khác. Mặc dù thuật ngữ lọc cộng tác (CF) mới chỉ xuất hiện được hơn một tập kỷ, CF bắt nguồn từ một việc mà con người đã làm trong nhiều thế kỷ - chia sẻ ý kiến với người khác.
 
-* Predict 
-* 
-
+Trong nhiều năm, mọi người đã đọc và thảo luận về những cuốn sách, những nhà hàng họ đã thử và những bộ phim họ đã xem - sau đó sử dụng những cuộc thảo luận này để đưa ra ý kiến. Ví dụ, Khi có đủ các đồng nghiệp của Amy nói rằng họ thích bộ phim mới nhất của Hollywood, cô ấy có thể quyết định rằng mình cũng nên xem nó. Tương tự như vậy, nếu nhiều người trong số họ thất nó là một thảm họa, cô ấy có thể quyết định tiêu tiền của mình vào nơi khác. Tốt hơn nữa, Amy có thể nhận thấy rằng Matt giới thiệu những thể loại phim mà cô ấy thấy thú vị, Paul có lịch sử giới thiệu những bộ phim mà cô ấy không thích, và Margaret dường như chỉ dưới thiệu mọi thứ. Theo thời gian, cô ấy biết được mình nên lắng nghe ý kiến của ai và cách áp dụng những ý kiến này để giúp cô ấy xác định được chất lượng của một item.
 
 
-$$
-\hat{v}_i^I=\frac{1}{\left|\mathbb{N}_i^I\right|} \sum_{j=1}^{\left|\mathbb{B}_i^I\right|} \rho_v^1\left(\left[e_{i j}^I, v_j^I\right]\right)
-$$
-ributes from its adjacent label nodes as
-$$
-\bar{v}_i^I=\frac{1}{\left|\mathbb{N}_i^L\right|} \sum_{j=1}^{\left|\mathbb{E}_i^A\right|} \rho_v^2\left(\left[e_{i j}^A, v_j^L\right]\right)
-$$
-outes of instance edge and assignment edge of the instance edge and label edge of the
-1ode $\mathbf{v}_i^L$ in the label graph is adjacent with 1 edges and label edges, respectively. Simila
-es, we also design two aggregation function er adjacent nodes as
-$$
-\begin{aligned}
-&\hat{v}_i^L=\frac{1}{\left|\mathbb{N}_i^L\right|} \sum_{j=1}^{\left|\mathbb{E}_i^L\right|} \rho_v^3\left(\left[e_{i j}^L, v_j^L\right]\right) \\
-&\bar{v}_i^L=\frac{1}{\left|\mathbb{N}_i^I\right|} \sum_{j=1}^{\left|\mathbb{E}_1^A\right|} \rho_v^4\left(\left[e_{i j}^A, v_j^I\right]\right)
-\end{aligned}
-$$
+
+## Core Concept
+
+
