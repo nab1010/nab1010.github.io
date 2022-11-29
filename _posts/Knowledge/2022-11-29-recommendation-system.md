@@ -3,9 +3,9 @@ layout: post
 title: "Collaborative Filtering Recommender Systems "
 subtitle: "J. Ben Schafer, Dan Frankowski, Jon Herlocker, and Shilad Sen"
 author: "NAB"
-header-img: "img/in-post/2022/Oct/yolov1.png"
+header-img: "img/in-post/2022/Nov/Knowledge/MovieLens_use_CF.png"
 # header-style: text
-header-mask: 0.4
+header-mask: 0.6
 lang: vi
 catalog: true
 # hidden: false
@@ -31,12 +31,42 @@ Trong nhiều năm, mọi người đã đọc và thảo luận về những cu
 
 Máy tính và trang web cho phép chúng ta tiến xa hơn nhưng lời truyền miệng. Thay vì giới hạn bản thân trong hàng chục hoặc hàng trăm cá nhân, internet cho phép chúng ta xem xét ý kiến của hàng nghìn người. Tốc độ của máy tính cho phép chúng ta xử  lý những ý kiến này trong thời gian thực và xác định không chỉ cộng đồng lớn hơn nhiều nghĩ gì về một sản phẩm, mà còn phát triển chế độ xem thực sự được cá nhân hóa về mặt hàng đó bằng cách sử dụng các ý kiến phù hợp nhất cho một người dùng hoặc nhóm người dùng nhất định.
 
-![MovieLens sử dụng tính năng lọc cộng tác để dự đoán rằng người dùng này có khả năng xếp hạng phim "Holes" 4 trên 5 sao.](/img/in-post/2022/Nov/Knowledge/MovieLens_use_CF.png "MovieLens sử dụng tính năng lọc cộng tác để dự đoán rằng người dùng này có khả năng xếp hạng phim "Holes" 4 trên 5 sao.")
-*__Hình 1:__ MovieLens sử dụng tính năng lọc cộng tác để dự đoán rằng người dùng này có khả năng xếp hạng phim "Holes" 4 trên 5 sao.*
+![MovieLens sử dụng tính năng lọc cộng tác để dự đoán rằng người dùng này có khả năng đánh giá phim "Holes" 4 trên 5 sao.](/img/in-post/2022/Nov/Knowledge/MovieLens_use_CF.png "MovieLens sử dụng tính năng lọc cộng tác để dự đoán rằng người dùng này có khả năng đánh giá phim "Holes" 4 trên 5 sao.")
+*__Hình 1:__ MovieLens sử dụng tính năng lọc cộng tác để dự đoán rằng người dùng này có khả năng đánh giá phim "Holes" 4 trên 5 sao.*
 
 ## Core Concept
 
-Trong khi chương này xem xét nhiều hệ thống CF, chúng tôi giới thiệu chủ đề thông qua MovieLens. MovieLens là một hệ thống lọc cộng tác cho phim. Một user trong MovieLens đánh giá các bộ phim sử dụng 1 đến 5 sao, trong đó 1 là "Awful - Kinh khủng" và 5 là "Must See - Nên xem". MovieLens sau đó sử dụng các đánh giá của cộng động để đề xuất phim khác người dùng có thể quan tâm, dự đoán những gì người dùng đó có thể xếp hạng một bộ phim hoặc thực hiện các tác vụ khác.
+Trong khi chương này xem xét nhiều hệ thống CF, chúng tôi giới thiệu chủ đề thông qua MovieLens. MovieLens là một hệ thống lọc cộng tác cho phim. Một user trong MovieLens đánh giá các bộ phim sử dụng 1 đến 5 sao, trong đó 1 là "Awful - Kinh khủng" và 5 là "Must See - Nên xem". MovieLens sau đó sử dụng các đánh giá của cộng động để đề xuất phim khác người dùng có thể quan tâm, dự đoán những gì người dùng đó có thể đánh giá một bộ phim hoặc thực hiện các tác vụ khác.
+
+Nói một cách khác, một đánh giá bao gồm sự kết hợp của hai thứ -  user và item - thường được bằng một giá trị nào đó. Một cách để trực quan hóa các đánh giá là dưới dạng ma trận Bảng 1. Không làm mất tính tổng quát, một ma trận đánh giá bao gồm một bảng trong đó mỗi hàng đại diện cho người dùng (user), mỗi cột đại diện cho một bộ phim cụ thể (item) và các con số tại giao điểm của một hàng và một cột biểu thị giá trị đánh giá của người dùng. Sự vắng mặt của một điểm đánh giá tại điểm giao nhau này cho biết rằng người dùng chưa đánh giá item này.
 
 
 
+*__Bảng 1:__ MovieLens ma trận đánh giá. Amy đánh giá bộ phim Sideways là 5. Matt chưa xem
+Matrix*
+
+| | The Matrix | Speed | Sideways | Brokeback Mountain |
+|:--:|:--:|:--:|:--:|:--:|
+| Amy | 1 | 2 | 5 |  | 
+| Matt |  | 3 | 5 | 4 | 
+| Paul | 5 | 5 | 2 | 1 | 
+| Cliff| 5 | 5 | 5 | 5 | 
+
+
+Thuật ngữ `người dùng` - `user` đề cập đến bất kỳ cá nhân nào cung cấp đánh giá cho một hệ thống. Thường xuyên nhất, chúng tôi sử dụng thuật ngữ này để chỉ những người sử dụng hệ thống để nhận thông tin (ví dụ: gợi ý) mặc dù nó cũng đề cập đến những người cung cấp dữ liệu (đánh giá) được sử dụng để tạo ra thông tin này.
+
+Các hệ thống lọc cộng tác tạo ra các dự đoán hoặc đề xuất cho một người dùng nhất định và một hoặc nhiều items. Items có thể bao gồm bất cứ thứ gì mà con người có thể cung cấp đánh giá, chẳng hạn như tác phẩm nghệ thuật, sách, đĩa CD, bài báo hoặc điểm đến trong kỳ nghỉ.
+
+Đánh giá trong hệ thống lọc cộng tác có thể có nhiều dạng khác nhau.
+* Đánh giá vô hướng có thể bao gồm đánh giá số, chẳng hạn như 1-5 sao được cung cấp trong MovieLens hoặc đánh giá theo thứ tự như rất đồng ý, đồng ý, trung lập, không đồng ý,
+mạnh mẽ phủ quyết.
+* Mô hình đánh giá nhị phân lựa chọn giữa đồng ý/không đồng ý hoặc tốt/xấu.
+* Đánh giá đơn nguyên có thể chỉ ra rằng người dùng đã quan sát hoặc mua một mặt hàng hoặc những người khôn ngoan khác đã đánh giá mặt hàng đó một cách tích cực. Việc không có xếp hạng cho thấy rằng chúng tôi không có thông tin liên quan đến người dùng với mặt hàng đó (có lẽ họ đã mua mặt hàng đó ở đâu đó
+khác).
+Xếp hạng có thể được thu thập thông qua các phương tiện rõ ràng, phương tiện tiềm ẩn hoặc cả hai. rõ ràng
+xếp hạng là những thứ mà người dùng được yêu cầu đưa ra ý kiến ​​về một mục. ngầm định
+xếp hạng là những xếp hạng được suy ra từ hành động của người dùng. Ví dụ, một người dùng truy cập một
+trang sản phẩm có thể quan tâm đến sản phẩm đó trong khi người dùng sau đó
+mua sản phẩm có thể có mối quan tâm mạnh mẽ hơn nhiều đối với sản phẩm đó. Các vấn đề của
+các quyết định thiết kế và sự đánh đổi liên quan đến việc thu thập các loại xếp hạng khác nhau là
+thảo luận trong phần 9.4.
