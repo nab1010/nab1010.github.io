@@ -21,9 +21,9 @@ tags:
   - Collaborative Filtering
 ---
 
-# Abstract
+## Abstract
 Một trong những công nghệ các nhân hóa mạnh mẽ cung cấp sức mạnh cho web là collaborative filtering (CF) - lọc cộng tác. CF là quá trình lọc hoặc đánh giá các items thông qua ý kiến của người khác. Công nghệ CF tập hợp ý kiến của các cộng đồng lớn được kết nối với nhau trên web, hỗ trợ lọc số lượng dữ liệu đáng kể. Trong bài này, các tác giả giới thiệu các khái niệm cốt lõi về lọc cộng tác dùng trong adaptive web, lý thuyết và thực hành thuật toán CF, và các quyết định thiết kế liên quan đến hệ thống đánh giá và thu thập đánh giá, Các tác giả cũng thảo luận về cách đánh giá hệ thống CF và sự phát triển của các giao diện tương tác.
-# Introduction
+## Introduction
 
 Collaborative Filtering là quá trình lọc hoặc đánh giá các items sử dụng ý kiến của người khác. Mặc dù thuật ngữ lọc cộng tác (CF) mới chỉ xuất hiện được hơn một tập kỷ, CF bắt nguồn từ một việc mà con người đã làm trong nhiều thế kỷ - chia sẻ ý kiến với người khác.
 
@@ -34,7 +34,7 @@ Máy tính và trang web cho phép chúng ta tiến xa hơn nhưng lời truyề
 ![MovieLens sử dụng tính năng lọc cộng tác để dự đoán rằng người dùng này có khả năng đánh giá phim "Holes" 4 trên 5 sao.](/img/in-post/2022/Nov/Knowledge/MovieLens_use_CF.png "MovieLens sử dụng tính năng lọc cộng tác để dự đoán rằng người dùng này có khả năng đánh giá phim "Holes" 4 trên 5 sao.")
 *__Hình 1:__ MovieLens sử dụng tính năng lọc cộng tác để dự đoán rằng người dùng này có khả năng đánh giá phim "Holes" 4 trên 5 sao.*
 
-## Core Concept
+### Core Concept
 
 Trong khi chương này xem xét nhiều hệ thống CF, chúng tôi giới thiệu chủ đề thông qua MovieLens. MovieLens là một hệ thống lọc cộng tác cho phim. Một user trong MovieLens đánh giá các bộ phim sử dụng 1 đến 5 sao, trong đó 1 là "Awful - Kinh khủng" và 5 là "Must See - Nên xem". MovieLens sau đó sử dụng các đánh giá của cộng động để đề xuất phim khác người dùng có thể quan tâm, dự đoán những gì người dùng đó có thể đánh giá một bộ phim hoặc thực hiện các tác vụ khác.
 
@@ -61,12 +61,49 @@ Các hệ thống lọc cộng tác tạo ra các dự đoán hoặc đề xuấ
 * Đánh giá vô hướng có thể bao gồm đánh giá số, chẳng hạn như 1-5 sao được cung cấp trong MovieLens hoặc đánh giá theo thứ tự như rất đồng ý, đồng ý, trung lập, không đồng ý,
 mạnh mẽ phủ quyết.
 * Mô hình đánh giá nhị phân lựa chọn giữa đồng ý/không đồng ý hoặc tốt/xấu.
-* Đánh giá đơn nguyên có thể chỉ ra rằng người dùng đã quan sát hoặc mua một mặt hàng hoặc những người khôn ngoan khác đã đánh giá mặt hàng đó một cách tích cực. Việc không có xếp hạng cho thấy rằng chúng tôi không có thông tin liên quan đến người dùng với mặt hàng đó (có lẽ họ đã mua mặt hàng đó ở đâu đó
-khác).
-Xếp hạng có thể được thu thập thông qua các phương tiện rõ ràng, phương tiện tiềm ẩn hoặc cả hai. rõ ràng
-xếp hạng là những thứ mà người dùng được yêu cầu đưa ra ý kiến ​​về một mục. ngầm định
-xếp hạng là những xếp hạng được suy ra từ hành động của người dùng. Ví dụ, một người dùng truy cập một
-trang sản phẩm có thể quan tâm đến sản phẩm đó trong khi người dùng sau đó
-mua sản phẩm có thể có mối quan tâm mạnh mẽ hơn nhiều đối với sản phẩm đó. Các vấn đề của
-các quyết định thiết kế và sự đánh đổi liên quan đến việc thu thập các loại xếp hạng khác nhau là
-thảo luận trong phần 9.4.
+* Đánh giá đơn nguyên có thể cho biết rằng người dùng đã quan sát hoặc mua một item hoặc người khác đã đánh giá tích cực item đó. Việc không có đánh giá cho thấy rằng chúng ta không có thông tin liên quan đến người dùng với item đó (có lẽ họ đã mua mặt hàng đó ở đâu đó khác).
+  
+Đánh giá có thể được thu thập thông qua các *explicit means - ý nghĩa rõ ràng*, *implicit means - ý nghĩa tiềm ẩn* hoặc cả hai. Đánh giá rõ ràng (Explicit Rating) là những thứ mà người dùng được yêu cầu đưa ra ý kiến về một item. Đánh giá ngầm (Implicit Rating) là những đánh giá được suy ra từ hành động của người dùng. Ví dụ, một người dùng truy cập một trang sản phẩm  có thể có mối quan tâm mạnh mẽ hơn nhiều đối với sản phẩm đó. Các vấn đề của các quyết định thiết kế và sự đánh đổi liên quan đén việc thu thập các loại đánh giá khác nhau được thảo luận trong phần 9.4.
+
+### The Beginning of Collaborative Filtering
+
+### Collaborative Filtering and the Adaptive Web
+
+## Uses for Collaborative Filtering
+
+### User Tasks
+
+### Collaborative Filtering System Functionality
+
+### Properties of Domains Suitable for Collaborative Filtering
+
+### Comparing Collaborative Filtering to Content-Based Filtering
+
+
+## Collaborative Filtering Algorithms: Theory and Practice 
+
+
+### Non-probabilistic Algorithms 
+
+### Probabilistic Algorithms 
+
+### Over-Arching Practical Concerns
+
+## Acquiring Ratings: Design Tradeoffs
+
+### Explicit Versus Implicit Ratings: Tradeoff 
+
+### The Challenge of Collecting Explicit Ratings
+
+
+### Rating Scales
+
+
+### Cold Start Issues
+
+
+## Evaluation
+
+### Accuracy
+
+### Beyond Accuracy
