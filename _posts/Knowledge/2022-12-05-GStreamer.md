@@ -3,9 +3,9 @@ layout: post
 title: "GStreamer 01"
 subtitle: ""
 author: "NAB"
-header-img: "img/in-post/2022/Nov/Knowledge/MovieLens_use_CF.png"
+header-img: "img/in-post/2022/Dec/nvidia_wallpaper.jpg"
 # header-style: text
-header-mask: 0.6
+header-mask: 0.4
 lang: vi
 catalog: true
 # hidden: false
