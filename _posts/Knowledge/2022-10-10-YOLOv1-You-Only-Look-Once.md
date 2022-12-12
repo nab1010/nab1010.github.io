@@ -8,7 +8,7 @@ header-img: "img/in-post/2022/Oct/yolov1.png"
 header-mask: 0.4
 lang: vi
 catalog: true
-# hidden: false
+hidden: true
 section:  Knowledge
 seo-keywords:
   - YOLOv1
