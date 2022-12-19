@@ -22,11 +22,7 @@ seo-keywords:
   - yolov3 google colab
 tags:
   - YOLO
-  - google colab
-  - COCO
-  - train
-  - object detection
-  - phát hiện hiện vật thể
+  - Object Detection
 ---
 
 YOLOv3 (**Y**ou **O**nly **L**ook **O**nce)

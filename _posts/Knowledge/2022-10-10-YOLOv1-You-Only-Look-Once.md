@@ -20,9 +20,7 @@ seo-keywords:
   - yolov5
   - yolov7
 tags:
-  - yolov1
-  - yolo
-  - You Only Look Once
+  - YOLO
 ---
 
 # Abstract

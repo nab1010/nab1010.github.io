@@ -16,10 +16,8 @@ seo-keywords:
   - Lệnh ubuntu thường gặp
   - lệnh ubuntu
 tags:
-  - ubuntu
-  - linux
-  - lệnh
-  - command
+  - Ubuntu Command
+  - Linux Command
 ---
 
 > Để mở **Terminal** để gõ các câu lệnh dùng phím tắt `Ctrl+Alt+T`

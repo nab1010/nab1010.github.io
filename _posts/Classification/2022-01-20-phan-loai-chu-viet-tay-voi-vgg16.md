@@ -28,12 +28,8 @@ seo-keywords:
   - phân loại chữ viết tay
   - chữ viết tay deep learning
 tags:
-  - vgg16
-  - google colab
-  - chữ viết tay
-  - train
-  - classification
-  - phân loại
+  - VGG16
+  - Image Classification
 ---
 
  > Trong bài viết này, mình sẽ hướng dẫn các bạn cách huấn luyện một mô hình phân loại chữ cái viết tay bằng Google Colab với bộ dữ liệu NIST. Trước tiên, chúng ta sẽ cùng tìm hiểu qua về kiến trúc mô hình nay được sử dụng VGG16 và bộ dữ liệu NIST.
