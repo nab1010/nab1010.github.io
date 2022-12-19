@@ -27,11 +27,8 @@ seo-keywords:
   - google colab deep learning
 
 tags:
-  - google colab
-  - hướng dẫn
-  - tutorial
-  - công cụ
-  - tools
+  - Tutorial
+  - Tool
 ---
 
 
