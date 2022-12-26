@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Install Deepstream 6.0"
-subtitle: "Install Deepstream 6.0"
+title: "Install DeepStream 6.0"
+subtitle: "Install DeepStream 6.0"
 author: "NAB"
 header-img: "img/in-post/2022/Dec/nvidia_wallpaper.jpg"
 # header-style: text
@@ -15,5 +15,5 @@ seo-keywords:
   - install-deepstream
 tags:
   - NVIDIA
-  - Deepstream
+  - DeepStream
 ---
