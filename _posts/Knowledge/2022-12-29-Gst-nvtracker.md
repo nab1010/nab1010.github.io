@@ -101,3 +101,22 @@ Bảng sau mô tả các thuộc tính của plugin Gst-nvtracker.
 | tracking-id-reset-mode | Cho phép force-reset tracking ID dựa trên sự kiện pipeline. Sau khi đặt lại ID theo dõi được bật và sự kiện như vậy xảy ra, ID tracking thấp hơn 32-bit sẽ được reset về 0: <br> 0: Không đặt lại tracking ID khi sự kiện reset luồng hoặc EOS xảy ra <br> 1: Chấm dứt tất cả các trackers hiện có và chỉ định ID mới cho luồng khi quá trình reset luồng diễn ra (tức là `GST_NVEVENT_STEAM_RESET`) <br> 2: Để ID tracking bắt đầu từ 0 sau khi nhận được sự kiện EOS (tức là `GST_NVEVENT_STREAM_EOS`) (Lưu ý: chỉ ID theo dõi thấp hơn 32 bit mới bắt đầu từ 0) <br> 3: Enable cả lựa chọn 1 và 2 | Integer, 0 -> 3 | tracking-id-reset-mode=0 |
 
 # NvDsTracker API for Low-Level Tracker Library
+
+Một thư viện low-level có thể được triển khai bằng API được xác định trong `sources/includes/nvdstracker.h`. Các phần của API đề cập dến `sources/includes/nvbufsurface.h`. Các tên của hàm API và cấu trúc dữ liệu có tiền tố là `NvMOT`, nghĩa là NVIDIA Multi-Object Tracker. Dưới đây là quy trình chung của API:
+
+1. **Hàm cần thiết đầu tiền là:**
+
+```c
+NvMOTStatus NvMOT_Query (
+     uint16_t customConfigFilePathSize,
+     char* pCustomConfigFilePath,
+     NvMOTQuery *pQuery
+);
+```
+- Plugin sử dụng hàm này để truy vấn các khả năng và yêu cầu của thư viện low-level trước khi nó bắt đầu bất kỳ phiên xử lý nào  với thư viện. Các thuộc tính được truy vấn bao gồm định dạng màu của các frames (ví dụ: `RGBA` hoặc `NV12`), kiểu dữ liệu (ví dụ:NVIDIA® CUDA® device hoặc CPU-mapped NVMM) và support for batch processing.
+
+- Plugin thực hiện truy vấn này một lần trong giai đoạn khởi tạo và kết quả của nó được áp dụng cho tất cả các contexts được thiết lập với thư viện low-level. Nếu tệp cấu hình của thư viện low-level được chỉ định, nó sẽ được cung cấp trong truy vấn để thư viện tham khảo. Cấu trúc trả lời truy vấn, `NvMOTQuery`, bao gồm các trường sau:
+  - `NvMOTCompute computeConfig`: Report các mục tiêu tính toán được hỗ trợ bởi thư viện. Plugin hiện tải chỉ lặp lại giá trị được report khi bắt đầu context.
+  - `uint8_t numTransforms`: Số lượng định dạng màu được yêu cầu bởi thư viện low-level. Rải giá trị là từ `0` đến `NVMOT_MAX_TRANSFORMS`. Đặt nó thành `0` nếu thư viện không yêu cầu bất kỳ dữ liệu trực quan nào.
+  - > `0` không có nghĩa là dữ liệu chưa được chuyển đổi được truyền đén thư viện
+  - 
