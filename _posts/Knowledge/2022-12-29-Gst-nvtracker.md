@@ -53,6 +53,34 @@ Phần này sẽ tổng hợp các inputs và outputs và phương tiện giao t
   - Gst Buffer (dưới dạng frame batch từ các luồng source có sẵn)
   - `NvDsBatchMeta`
 
+Chi tiết hơn về `NvDsBatchMeta` có thể tìm thấy tại [link](https://docs.nvidia.com/metropolis/deepstream/dev-guide/text/DS_plugin_metadata.html?highlight=nvdsbatchmeta/). Các định dạng màu được plugin nvtracker hỗ trợ cho frame video đầu vào là NV12 và RGBA.
+
 - Output
   - Gst Buffer (được cung cấp như một input)
-  - `NvDsBatchMeta` ()
+  - `NvDsBatchMeta` (có thêm tọa đối tượng được theo dõi (object coordinates), độ tin cậy của tracker (tracker confidenc) và ID của đối tượng (object IDs) trong `NvDsObjectMeta`)
+
+> Lưu ý
+>
+> Nếu thuật toán tracker không tạo giá trị độ tin cậy (confidence) thì giá trị này sẽ được đặt bằng là giá trị mặc định (nghĩa là `1.0`) cho các đối tượng được theo dõi. Đối với **IOU** và **DeepSORT** trackers, `tracker-confidence` được đật là `1.0` vì các thuật toán này không tạo ra giá trị độ tin cậy cho các đối tượng được theo dõi. Mặt khác, **NvDCF** tracker tạo ra độ tin cậy cho các đối tượng được theo dõi do khả năng theo dõi đối tượng trực quan của nó và giá trị của nó được đặt trong trường `tracker-confidence` của cấu trúc `NvDsObjectMeta`.
+>
+> Lưu ý rằng có các tham số riêng biệt trong `NvDsObjectMeta` cho độ tin cậy của detector và độ tin cậy của tracker, là `confidence` và `tracker-confidence` tương ứng. Chi tiết hơn có thể được tìm thấy trong [New metadata field](https://docs.nvidia.com/metropolis/deepstream/dev-guide/text/DS_plugin_metadata.html?highlight=tracker_confidence#new-metadata-fields)
+
+Bảng sau tổng hợp các tính năng của plugin.
+
+| Tính năng | Mô tả |
+| --- | --- |
+| Configurable tracker width/height | Các frames được scaled nội bộ trong plugin NvTracker thành độ phân giải được chỉ định để theo dõi và được chuyển đến thư viện low-level |
+| Multi-stream CPU/GPU tracker | Hỗ trợ theo dõi trên batched buffers bao gồm các frames từ nhiều sources |
+| NV12 Input | __ |
+| RGBA Input | __ |
+| Configurable GPU device | Người dùng có thể lựa chọn GPU cho việc chuyển đổi scaling/color format nội bộ và tracking |
+| Dynamic addition/deletion of sources at runtime | Hỗ trợ theo dõi trên các sources mới được thêm vào trong quá trình chạy  và cleanup tài nguyên khi sources được gỡ ra |
+| Support for user’s choice of low-level library | Tự động load thư viện low-level do người dùng chọn |
+| Support for batch processing | Hỗ trợ việc gửi các frames từ nhiều luồng đầu vào tới thư viện low-level dưới dạng một batch nếu thư viện low-level có khả năng xử lý điều đó |
+| Support for multiple buffer formats as input to low-level library | Chuyển đổi input buffer thành các định dạng do thư viện low-level yêu cầu, cho tối đa 4 định dạng trên mỗi frame |
+| Support for reporting past-frame data | Hỗ trợ việc báo cáo dữ liệu các frame trong quá khứ nếu thư viện low-level hỗ trợ khả năng này |
+| Support for enabling tracking-id display | Hỗ trợ enabling hoặc disabling hiển thị của tracking-id |
+| Support for tracking ID reset based on event | Dựa trên sử kiện pipeline (ví dụ: `GST_NVEVENT_STREAM_EOS` và `GST_NVEVENT_STREAM_RESET`), IDs theo dõi trên một luồng cụ thể có thể được đặt lại thành 0 hoặc ID mới |
+
+# Gst Properties
+
