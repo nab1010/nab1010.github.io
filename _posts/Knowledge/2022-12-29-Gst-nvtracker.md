@@ -98,10 +98,6 @@ Bảng sau mô tả các thuộc tính của plugin Gst-nvtracker.
 | tracking-surface-type | Đặt loại surface stream để theo dõi | Integer, ≥0 | tracking-surface-type=0 |
 | display-tracking-id | Cho phép hiển thị ID theo dõi trên OSD (On Screen Display) | Boolean, 0 hoặc 1 | display-tracking-id=1 |
 | compute-hw | Công cụ tính toán để sử dụng để scaling. 0 - Mặc định 1 - GPU 2 - VIC (chỉ dành cho Jetson) | Integer, 0 -> 2 | compute-hw=1 |
-| tracking-id-reset-mode | Cho phép force-reset tracking ID dựa trên sự kiện pipeline. Sau khi đặt lại ID theo dõi được bật và sự kiện như vậy xảy ra, ID tracking thấp hơn 32-bit sẽ được reset về 0:
-0: Không đặt lại tracking ID khi sự kiện reset luồng hoặc EOS xảy ra 
-1: Chấm dứt tất cả các trackers hiện có và chỉ định ID mới cho luồng khi quá trình reset luồng diễn ra (tức là `GST_NVEVENT_STEAM_RESET`) 
-2: Để ID tracking bắt đầu từ 0 sau khi nhận được sự kiện EOS (tức là `GST_NVEVENT_STREAM_EOS`) (Lưu ý: chỉ ID theo dõi thấp hơn 32 bit mới bắt đầu từ 0) 
-3: Enable cả lựa chọn 1 và 2 | Integer, 0 -> 3 | tracking-id-reset-mode=0 |
+| tracking-id-reset-mode | Cho phép force-reset tracking ID dựa trên sự kiện pipeline. Sau khi đặt lại ID theo dõi được bật và sự kiện như vậy xảy ra, ID tracking thấp hơn 32-bit sẽ được reset về 0: 0: Không đặt lại tracking ID khi sự kiện reset luồng hoặc EOS xảy ra  1: Chấm dứt tất cả các trackers hiện có và chỉ định ID mới cho luồng khi quá trình reset luồng diễn ra (tức là `GST_NVEVENT_STEAM_RESET`) 2: Để ID tracking bắt đầu từ 0 sau khi nhận được sự kiện EOS (tức là `GST_NVEVENT_STREAM_EOS`) (Lưu ý: chỉ ID theo dõi thấp hơn 32 bit mới bắt đầu từ 0)  3: Enable cả lựa chọn 1 và 2 | Integer, 0 -> 3 | tracking-id-reset-mode=0 |
 
 # NvDsTracker API for Low-Level Tracker Library
