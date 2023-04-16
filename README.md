@@ -4,7 +4,7 @@
 
 Hi, I'm **Bang** (_@nab1010_), a student at Hanoi University of Science and Technology ([**HUST**](https://www.hust.edu.vn/)). I am a researcher at Smart Application And Network System Laboratory ([**SANSlab**](https://sanslab.vn/)) - School of Electronics and Telecommunications ([**SET**](http://set.hust.edu.vn/)). My research interests are in Machine Learning, Deep Learning and Computer Vision.
 
-[![](https://img.shields.io/badge/website-000000?style=for-the-badge&logo=About.me&logoColor=white)](https://nabblog.me/)
+[![](https://img.shields.io/badge/website-000000?style=for-the-badge&logo=About.me&logoColor=white)](https://nabang1010.com/)
 [![](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/nab1010/)
 [![](https://img.shields.io/static/v1?style=for-the-badge&message=GitHub&color=181717&logo=GitHub&logoColor=FFFFFF&label=)](https://github.com/nab1010)
 [![](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](MAILTO:nab1010.work@gmail.com)
