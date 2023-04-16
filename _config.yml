@@ -99,7 +99,7 @@ service-worker: true
 friends: [
     {
         title: "NAB Profile",
-        href: "https://nabangn1010.com/profile/"
+        href: "https://nabang1010.com/profile/"
     }
 ]
 
