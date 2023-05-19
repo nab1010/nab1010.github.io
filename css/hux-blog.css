@@ -339,6 +339,26 @@ body::-webkit-scrollbar-thumb {
 .devicon-premierepro-plain:hover{
   color: #a000cc;
 }
+
+
+.devicon-kubernetes-plain:hover{
+  color: #486bb3;
+}
+.devicon-prometheus-original:hover{
+  color: #e75225;
+}
+.devicon-grafana-original:hover{
+  color: #e78040;
+}
+.devicon-anaconda-original:hover{
+  color: #3eb049;
+}
+.devicon-docker-plain:hover{
+  color: #019bc6;
+}
+/* .devicon-flask-original:hover{
+  color: #019bc6;
+} */
 .search-page {
   position: fixed;
   top: 0;
