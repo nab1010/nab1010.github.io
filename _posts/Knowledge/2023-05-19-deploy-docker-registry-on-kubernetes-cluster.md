@@ -239,7 +239,16 @@ docker pull nabang1010-docker-registry:5000/deepstream:6.2-devel
 ```
 
 
-## Step 8: Deploy the Private Docker Registry on Kubernetess
+## Step 8: Create a Secret use to credentials to access the Private Docker Registry
 
+**Create a Secret**
+
+```bash
+kubectl create secret docker-registry regcred --docker-server=nabang1010-docker-registry:5000 --docker-username=myuser --docker-password=mypasswd --
+```
+
+## References
+
+[Deploy Your Private Docker Registry as a Pod in Kubernetes](https://medium.com/swlh/deploy-your-private-docker-registry-as-a-pod-in-kubernetes-f6a489bf0180)
 
 
