@@ -110,52 +110,60 @@ sudo systemctl restart containerd
 sudo apt-get update \
    && sudo apt-get install -y apt-transport-https curl
 ```
+**Add the package repository keys:**
 
 ```bash
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 ```
+**And the repository:**
 
 ```bash
 cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
 deb https://apt.kubernetes.io/ kubernetes-xenial main
 EOF
 ```
+**Update the package listing and install kubelet:**
 
 ```bash
 sudo apt-get update \
    && sudo apt-get install -y -q kubelet kubectl kubeadm
 ```
+> **Note:** If you’re using containerd as the CRI runtime, then follow these steps:
+> **Configure the cgroup driver for kubelet:**
+> ```bash
+> sudo mkdir -p  /etc/systemd/system/kubelet.service.d/
+> ```
+> 
+> ```bash
+> sudo cat << EOF | sudo tee  /etc/systemd/system/kubelet.service.d/0-containerd.conf
+> [Service]
+> Environment="KUBELET_EXTRA_ARGS= --runtime-request-timeout=15m --container-runtime-endpoint=unix:///var/run/containerd/containerd.sock --cgroup-driver='systemd'"
+> EOF
+> ```
+> **Restart kubelet:**
+> ```bash
+> sudo systemctl daemon-reload \
+>    && sudo systemctl restart kubelet
+> ```
 
-```bash
-sudo mkdir -p  /etc/systemd/system/kubelet.service.d/
-```
-
-```bash
-sudo cat << EOF | sudo tee  /etc/systemd/system/kubelet.service.d/0-containerd.conf
-[Service]
-Environment="KUBELET_EXTRA_ARGS= --runtime-request-timeout=15m --container-runtime-endpoint=unix:///var/run/containerd/containerd.sock --cgroup-driver='systemd'"
-EOF
-```
-
-```bash
-sudo systemctl daemon-reload \
-   && sudo systemctl restart kubelet
-```
+**Disable swap**
 
 ```bash
 sudo swapoff -a
 ```
 
+**And `init` using `kubeadm`:**
 ```bash
 sudo kubeadm init --pod-network-cidr=192.168.0.0/16
 ```
+
+**Finish the configuration setup with Kubeadm:**
 
 ```bash
 mkdir -p $HOME/.kube \
    && sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config \
    && sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
-
 
 ## Step 3: Configure Networking
 
