@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Deploy Private Docker Registry on Kubernetes"
-subtitle: "Kubernetes"
+title: "Create GPU Kubernetes Cluster using Kubeadm"
+subtitle: "Create GPU Kubernetes Cluster using Kubeadm"
 author: "nabang1010"
 header-img: "img/in-post/2022/Dec/nvidia_wallpaper.jpg"
 # header-style: text
@@ -11,244 +11,188 @@ catalog: true
 # hidden: false
 section: Knowledge
 seo-keywords:
-  - kubernetes
-  - docker
-  - registry
-  - private-registry
+  - kubernetes-cluster-gpu
+  - kubernetes-cluster
+  - cluster-gpu
+  - deepops
 tags:
-  - Docker
   - Kubernetes
 ---
 
 
-## Requirements:
+## Step 1: Install CRI (Container Runtime Interface)
 
+### Using `containerd` as CRI**
 
-- Kubernetes Cluster
-- Docker
+**Install some pre-requisites for `containerd`:**
 
-## Step 1: Create Authentication files
-
-Folder tree structure
-
+```bash 
+sudo apt-get update \
+    && sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
 ```
-registry/
-├── auth
-│   └── htpasswd
-└── certs
-    ├── tls.crt
-    └── tls.key
-```
-**Create and move to `registry` folder**
+
+**The `overlay` and `br_netfilter` modules are required to be loaded:**
 
 ```bash
-mkdir registry
-cd registry/
+cat <<EOF | sudo tee /etc/modules-load.d/containerd.conf
+overlay
+br_netfilter
+EOF
 ```
-**Create TLS certificates using ` openssl`**
 
 ```bash
-openssl req -x509 -newkey rsa:4096 -days 365 -nodes -sha256 -keyout certs/tls.key -out certs/tls.crt -subj "/CN=nabang1010-docker-registry" -addext "subjectAltName = DNS:nabang1010-docker-registry"
+sudo modprobe overlay \
+   && sudo modprobe br_netfilter
 ```
-Change `nabang1010-docker-registry` to your domain name
+**Setup the required `sysctl` parameters and make them persistent:**
 
-**Create User Authentication using `htpasswd`**
-
-Create `auth` folder
 
 ```bash
-mkdir auth
+cat <<EOF | sudo tee /etc/sysctl.d/99-kubernetes-cri.conf
+net.bridge.bridge-nf-call-iptables  = 1
+net.ipv4.ip_forward                 = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+EOF
 ```
-
-**Use `htpasswd` to create user authentication**
+  
+```bash
+sudo sysctl --system
+```
+**Now proceed to setup the Docker repository:**
 
 ```bash
-docker run --rm --entrypoint htpasswd registry:2.8.2 -Bbn myuser mypasswd > auth/htpasswd
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key --keyring /etc/apt/trusted.gpg.d/docker.gpg add -
 ```
-Change `myuser` and `mypasswd` to your username and password
-
-## Step 2: Create Kubernetes Secret to mount the certificates and authentication files
-
-**Secret for TLS certificates**
 
 ```bash
-kubectl create secret tls certs-secret --cert=./registry/certs/tls.crt --key=./registry/certs/tls.key
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
 ```
-**Secret for Authentication**
+
+**Install `containerd`:**
 
 ```bash
-kubectl create secret generic auth-secret --from-file=./registry/auth/htpasswd
+sudo apt-get update \
+   && sudo apt-get install -y containerd.io
 ```
-## Step 3: Create Persistent Volume and Persistent Volume Claim
 
-**Prepare `repository-volume.yaml` file**
-
-```yaml
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: docker-repo-pv
-spec:
-  capacity:
-    storage: 1Gi
-  accessModes:
-  - ReadWriteOnce
-  hostPath:
-    path: /tmp/repository
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: docker-repo-pvc
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-```
-**Create Persistent Volume and Persistent Volume Claim**
+**Create a default `config.toml`:**
 
 ```bash
-kubectl create -f repository-volume.yaml
+sudo mkdir -p /etc/containerd \
+   && sudo containerd config default | sudo tee /etc/containerd/config.toml
 ```
-## Step 4: Create Private Docker Registry Pod
 
+**Configure `containerd` to use the `systemd` cgroup driver with `runc` by editing the configuration file and adding this line:**
 
-**Prepare `docker-registry-pod.yaml` file**
-
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: docker-registry-pod
-  labels:
-    app: registry
-spec:
-  containers:
-  - name: registry
-    image: registry:2.6.2
-    volumeMounts:
-    - name: repo-vol
-      mountPath: "/var/lib/registry"
-    - name: certs-vol
-      mountPath: "/certs"
-      readOnly: true
-    - name: auth-vol
-      mountPath: "/auth"
-      readOnly: true
-    env:
-    - name: REGISTRY_AUTH
-      value: "htpasswd"
-    - name: REGISTRY_AUTH_HTPASSWD_REALM
-      value: "Registry Realm"
-    - name: REGISTRY_AUTH_HTPASSWD_PATH
-      value: "/auth/htpasswd"
-    - name: REGISTRY_HTTP_TLS_CERTIFICATE
-      value: "/certs/tls.crt"
-    - name: REGISTRY_HTTP_TLS_KEY
-      value: "/certs/tls.key"
-  volumes:
-  - name: repo-vol
-    persistentVolumeClaim:
-      claimName: docker-repo-pvc
-  - name: certs-vol
-    secret:
-      secretName: certs-secret
-  - name: auth-vol
-    secret:
-      secretName: auth-secret
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: nabang1010-docker-registry
-spec:
-  selector:
-    app: registry
-  ports:
-  - port: 5000
-    targetPort: 5000
-```
-**Create Private Docker Registry Pod**
 
 ```bash
-kubectl create -f docker-registry-pod.yaml
+sudo nano /etc/containerd/config.toml
 ```
 
-## Step 5: Get  Private Docker Registry Pod IP address
+```txt
+[plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+   SystemdCgroup = true
+```
 
-**Get service**
+**Now restart the daemon:**
 
 ```bash
-kubectl get svc | grep nabang1010-docker-registry
-```
-Output
-
-```
-nabang1010-docker-registry               ClusterIP   10.105.210.201   <none>        5000/TCP   8m33s
+sudo systemctl restart containerd
 ```
 
-## Step 6: Allow access to the Private Docker Registry from all nodes in the cluster
+## Step 2: Install Kubernetes Components
 
-SSH to each node in the cluster and edit `/etc/hosts` file
+**First, install some dependencies:**
 
 ```bash
-sudo nano /etc/hosts
+sudo apt-get update \
+   && sudo apt-get install -y apt-transport-https curl
 ```
-Add the following line to the end of the file
-
-```
-10.105.210.201      nabang1010-docker-registry
-```
-This make sure that the domain name `nabang1010-docker-registry` is resolved to the IP address of the Private Docker Registry Pod
-
-
-**Copy the `tls.crt` that we created earlier as `ca.crt` into a custom `/etc/docker/certs.d/docker-registry:5000` directory in all the nodes in our cluster to make sure that our self-signed certificate is trusted by Docker**. 
-```bash
-sudo cp registry/certs/tls.crt /etc/docker/certs.d/nabang1010-docker-registry:5000/ca.crt
-```
-
-## Step 7: Test the Private Docker Registry
-
-**Login to the Private Docker Registry**
 
 ```bash
-docker login nabang1010-docker-registry:5000 -u myuser -p mypasswd
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 ```
-
-**Pull an image from Docker Hub**
 
 ```bash
-docker pull nvcr.io/nvidia/deepstream:6.2-devel
+cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
+deb https://apt.kubernetes.io/ kubernetes-xenial main
+EOF
 ```
-**Build a new image**
 
 ```bash
-docker tag nvcr.io/nvidia/deepstream:6.2-devel nabang1010-docker-registry:5000/deepstream:6.2-devel
+sudo apt-get update \
+   && sudo apt-get install -y -q kubelet kubectl kubeadm
 ```
-**Push the image to the Private Docker Registry**
 
 ```bash
-docker push nabang1010-docker-registry:5000/deepstream:6.2-devel
+sudo mkdir -p  /etc/systemd/system/kubelet.service.d/
 ```
-**Pull the image from the Private Docker Registry**
 
 ```bash
-docker pull nabang1010-docker-registry:5000/deepstream:6.2-devel
+sudo cat << EOF | sudo tee  /etc/systemd/system/kubelet.service.d/0-containerd.conf
+[Service]
+Environment="KUBELET_EXTRA_ARGS= --runtime-request-timeout=15m --container-runtime-endpoint=unix:///var/run/containerd/containerd.sock --cgroup-driver='systemd'"
+EOF
 ```
-
-
-## Step 8: Create a Secret use to credentials to access the Private Docker Registry
-
-**Create a Secret**
 
 ```bash
-kubectl create secret docker-registry regcred --docker-server=nabang1010-docker-registry:5000 --docker-username=myuser --docker-password=mypasswd --
+sudo systemctl daemon-reload \
+   && sudo systemctl restart kubelet
 ```
 
-## References
+```bash
+sudo swapoff -a
+```
 
-[Deploy Your Private Docker Registry as a Pod in Kubernetes](https://medium.com/swlh/deploy-your-private-docker-registry-as-a-pod-in-kubernetes-f6a489bf0180)
+```bash
+sudo kubeadm init --pod-network-cidr=192.168.0.0/16
+```
+
+```bash
+mkdir -p $HOME/.kube \
+   && sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config \
+   && sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
 
 
+## Step 3: Configure Networking
+
+**Install the Tigera Calico operator and custom resource definitions.**
+
+```bash
+kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.1/manifests/tigera-operator.yaml
+```
+**Install Calico by creating the necessary custom resource. For more information on configuration options available in this manifest.**
+
+```bash
+kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.1/manifests/custom-resources.yaml
+```
+**Remove the taints on the control plane so that you can schedule pods on it.**
+
+```bash
+kubectl taint nodes --all node-role.kubernetes.io/control-plane-
+kubectl taint nodes --all node-role.kubernetes.io/master-
+```
+
+
+## Step 4: Install NVIDIA Drivers
+
+
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
