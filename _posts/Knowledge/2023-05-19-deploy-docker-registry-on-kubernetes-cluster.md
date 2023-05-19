@@ -162,7 +162,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: docker-registry
+  name: nabang1010-docker-registry
 spec:
   selector:
     app: registry
@@ -176,15 +176,70 @@ spec:
 kubectl create -f docker-registry-pod.yaml
 ```
 
-```bash
-```
+## Step 5: Get  Private Docker Registry Pod IP address
+
+**Get service**
 
 ```bash
+kubectl get svc | grep nabang1010-docker-registry
+```
+Output
+
+```
+nabang1010-docker-registry               ClusterIP   10.105.210.201   <none>        5000/TCP   8m33s
+```
+
+## Step 6: Allow access to the Private Docker Registry from all nodes in the cluster
+
+SSH to each node in the cluster and edit `/etc/hosts` file
+
+```bash
+sudo nano /etc/hosts
+```
+Add the following line to the end of the file
+
+```
+10.105.210.201      nabang1010-docker-registry
+```
+This make sure that the domain name `nabang1010-docker-registry` is resolved to the IP address of the Private Docker Registry Pod
+
+
+**Copy the `tls.crt` that we created earlier as `ca.crt` into a custom `/etc/docker/certs.d/docker-registry:5000` directory in all the nodes in our cluster to make sure that our self-signed certificate is trusted by Docker**. 
+```bash
+sudo cp registry/certs/tls.crt /etc/docker/certs.d/nabang1010-docker-registry:5000/ca.crt
+```
+
+## Step 7: Test the Private Docker Registry
+
+**Login to the Private Docker Registry**
+
+```bash
+docker login nabang1010-docker-registry:5000 -u myuser -p mypasswd
+```
+
+**Pull an image from Docker Hub**
+
+```bash
+docker pull nvcr.io/nvidia/deepstream:6.2-devel
+```
+**Build a new image**
+
+```bash
+docker tag nvcr.io/nvidia/deepstream:6.2-devel nabang1010-docker-registry:5000/deepstream:6.2-devel
+```
+**Push the image to the Private Docker Registry**
+
+```bash
+docker push nabang1010-docker-registry:5000/deepstream:6.2-devel
+```
+**Pull the image from the Private Docker Registry**
+
+```bash
+docker pull nabang1010-docker-registry:5000/deepstream:6.2-devel
 ```
 
 
-
-
+## Step 8: Deploy the Private Docker Registry on Kubernetess
 
 
 
