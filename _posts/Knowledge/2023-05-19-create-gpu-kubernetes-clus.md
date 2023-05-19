@@ -129,6 +129,7 @@ sudo apt-get update \
    && sudo apt-get install -y -q kubelet kubectl kubeadm
 ```
 > **Note:** If you’re using containerd as the CRI runtime, then follow these steps:
+> 
 > **Configure the cgroup driver for kubelet:**
 > ```bash
 > sudo mkdir -p  /etc/systemd/system/kubelet.service.d/
