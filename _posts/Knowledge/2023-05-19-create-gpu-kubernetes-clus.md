@@ -22,7 +22,7 @@ tags:
 
 ## Step 1: Install CRI (Container Runtime Interface)
 
-### Using `containerd` as CRI**
+### Using `containerd` as CRI
 
 **Install some pre-requisites for `containerd`:**
 
@@ -183,7 +183,6 @@ kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.1
 kubectl taint nodes --all node-role.kubernetes.io/control-plane-
 kubectl taint nodes --all node-role.kubernetes.io/master-
 ```
-
 
 ## Step 4: Install NVIDIA Drivers
 
