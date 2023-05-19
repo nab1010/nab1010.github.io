@@ -22,8 +22,10 @@ tags:
 
 
 ## Requirements:
-    - Kubernetes Cluster
-    - Docker
+
+
+- Kubernetes Cluster
+- Docker
 
 ## Step 1: Create Authentication files
 
