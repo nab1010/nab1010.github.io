@@ -23,7 +23,7 @@ tags:
 
 <div align="center">
 
-# YOLOv8 Object Tracking TensorRT
+<h1>YOLOv8 Object Tracking TensorRT</h1>
 
 </div>
 
