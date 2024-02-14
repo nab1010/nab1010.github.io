@@ -3,7 +3,7 @@ layout: post
 title: "YOLOv8 Object Tracking TensorRT"
 subtitle: "YOLOv8 TensorRT - DeepSORT TensorRT - BYTETrack"
 author: "nabang1010"
-header-img: "/img/in-post/2024/Feb/ObjectDetection/sample_yolov8_bytetrack.gif"
+header-img: "img/in-post/2024/Feb/ObjectDetection/sample_yolov8_bytetrack.gif"
 # header-style: text
 header-mask: 0.5
 lang: en
