@@ -437,38 +437,34 @@ Bằng cách này, bạn vừa thấy áp dụng một mẫu thiết kế trong 
 Thật không may, kế thừa đi kèm với những lưu ý mà thường chỉ trở nên rõ ràng sau khi chương trình của bạn đã có nhiều classes và thay đổi bất kỳ điều gì cũng khá khó khăn. Dưới đây là một danh sách các vấn đề đó.
 
 > - **A subclass can’t reduce the interface of the superclass**. You have to implement all abstract methods of the parent class even if you won’t be using them.
+- **Một lớp con không thể giảm `interface` của lớp cha**. Bạn phải triển khai tất cả các phương thức trừu tượng của lớp cha ngay cả khi bạn không sử dụng chúng.
 > - **When overriding methods you need to make sure that the new behavior is compatible with the base one**. It’s important because objects of the subclass may be passed to any code that expects objects of the superclass and you don’t want that code to break.
+- **Khi ghi đè phương thức, bạn cần đảm bảo rằng hành vi mới tương thích với hành vi cơ bản**. Điều này quan trọng vì các đối tượng của lớp con có thể được chuyển đến bất kỳ code nào mong đợi các objects của lớp cha và bạn không muốn code đó bị hỏng.
 > - **Inheritance breaks encapsulation of the superclass** because the internal details of the parent class become available to the subclass. There might be an opposite situation where a pro- grammer makes a superclass aware of some details of subclasses for the sake of making further extension easier. 
+- **Kế thừa phá vỡ tính đóng gói của lớp cha** vì các chi tiết nội bộ của lớp cha trở nên có sẵn cho lớp con. Có thể có tình huống ngược lại khi một lập trình viên làm cho lớp cha nhận thức về một số chi tiết của các lớp con vì lợi ích của việc mở rộng tiếp theo dễ dàng hơn.
 > - **Subclasses are tightly coupled to superclasses**. Any change in a superclass may break the functionality of subclasses.
+- **Lớp con được liên kết chặt chẽ với lớp cha**. Bất kỳ thay đổi nào trong lớp cha cũng có thể làm hỏng chức năng của lớp con.
 > - **Trying to reuse code through inheritance can lead to creating parallel inheritance hierarchies**. Inheritance usually takes place in a single dimension. But whenever there are two or more dimensions, you have to create lots of class combinations, bloating the class hierarchy to a ridiculous size. <br>
 > There’s an alternative to inheritance called composition. Whereas inheritance represents the “is a” relationship between classes (a car is a transport), composition represents the “has a” relationship (a car has an engine). <br>
 > I should mention that this principle also applies to aggregation—a more relaxed variant of composition where one object may have a reference to the other one but doesn’t manage its lifecycle. Here’s an example: a car has a driver, but he or she may use another car or just walk without the car 
 
-- **Một lớp con không thể giảm `interface` của lớp cha**. Bạn phải triển khai tất cả các phương thức trừu tượng của lớp cha ngay cả khi bạn không sử dụng chúng.
-- **Khi ghi đè phương thức, bạn cần đảm bảo rằng hành vi mới tương thích với hành vi cơ bản**. Điều này quan trọng vì các đối tượng của lớp con có thể được chuyển đến bất kỳ code nào mong đợi các objects của lớp cha và bạn không muốn code đó bị hỏng.
-- **Kế thừa phá vỡ tính đóng gói của lớp cha** vì các chi tiết nội bộ của lớp cha trở nên có sẵn cho lớp con. Có thể có tình huống ngược lại khi một lập trình viên làm cho lớp cha nhận thức về một số chi tiết của các lớp con vì lợi ích của việc mở rộng tiếp theo dễ dàng hơn.
-- **Lớp con được liên kết chặt chẽ với lớp cha**. Bất kỳ thay đổi nào trong lớp cha cũng có thể làm hỏng chức năng của lớp con.
 - **Cố gắng tái sử dụng mã thông qua kế thừa có thể dẫn đến việc tạo ra các cấu trúc kế thừa song song**. Kế thừa thường diễn ra trong một chiều. Nhưng mỗi khi có hai hoặc nhiều chiều, bạn phải tạo ra nhiều kết hợp lớp, làm phình to cấu trúc lớp thành một kích thước ngớ ngẩn. <br>
 - Có một phương án thay thế cho kế thừa gọi là `composition`. Trong khi kế thừa đại diện cho mối quan hệ “là một” giữa các lớp (một chiếc xe là một phương tiện), `composition` đại diện cho mối quan hệ “có một” (một chiếc xe có một động cơ). <br>
 - Tôi nên đề cập rằng nguyên tắc này cũng áp dụng cho `aggregation`—một biến thể linh hoạt hơn của `composition` nơi một đối tượng có thể có một tham chiếu đến đối tượng khác nhưng không quản lý vòng đời của nó. Dưới đây là một ví dụ: một chiếc xe có một tài xế, nhưng anh ấy hoặc cô ấy có thể sử dụng một chiếc xe khác hoặc chỉ đi bộ mà không cần xe
 
 ### Example 
 
-```plantuml
-@startuml
-    skinparam backgroundColor #EEEBDC
-    skinparam handwritten true
-    actor Customer
-    Customer -> "login()" : username & password
-    "login()" -> Customer : session token
-    activate "login()"
-    Customer -> "placeOrder()" : session token, order info
-    "placeOrder()" -> Customer : ok
-    Customer -> "logout()"
-    "logout()" -> Customer : ok
-    deactivate "login()"
-@enduml
-```
+- **Arrow with empty triangle head:** Mũi tên với đầu tam giác trống đại diện cho `inheritance` và thường có chiều từ subclass đến superclass.
+- **Arrow with empty triangle head and dashed line:** Mũi tên với đầu tam giác trống và nét đứt chỉ ra rằng `class` này `implement` một `interface`.
+- **Simple Arrow:** Mũi tên đơn gian chỉ rằng một `class` phu thuộc vào một `class` khác. `Association` relationship.
+- **Simple Arrow and dashed line:** Mũi tên đơn gian và nét đứt chỉ ra rằng một `Dependency` relationship.
+- **Line with a filled diamond at the container end and an simple arrow at the end pointing toward the component:** Đường thẳng với một hình kim cương được điền ở đầu chứa và một mũi tên ở cuối chỉ về phần tử. `Composition` relationship.
+- **Line with a empty diamond at the container end and an simple arrow at the end pointing toward the component:** Đường thẳng với một hình kim cương trống ở đầu chứa và một mũi tên ở cuối chỉ về phần tử. `Aggregation` relationship.
+
+> As you see, each additional parameter results in multiplying the number of subclasses. There’s a lot of duplicate code between subclasses because a subclass can’t extend two classes at the same time
+
+Như bạn thấy, mỗi tham số bổ sung dẫn đến việc nhân số lượng lớp con. Có rất nhiều mã trùng lặp giữa các lớp con vì một lớp con không thể mở rộng hai lớp cùng một lúc
+
 
 ----
 
