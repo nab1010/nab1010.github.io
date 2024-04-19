@@ -2921,6 +2921,7 @@ form .row:first-child .floating-label-form-group {
   font-weight: 800;
   letter-spacing: 1px;
   padding: 10px;
+  transition: all 0.3s cubic-bezier(0.54, 1.06, 0, 0.59) 0s;
   background-color: white;
   border-radius: 0;
 }
