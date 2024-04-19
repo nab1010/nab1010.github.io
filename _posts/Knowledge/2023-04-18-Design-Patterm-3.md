@@ -289,7 +289,7 @@ Sau khi làm điều đó, chúng ta có thể áp dụng đa hình bên trong l
 
 **AFTER:**  polymorphism helped us simplify the code, but the rest of the `Company` class still depends on the concrete `employee` classes
 
-Sau khi làm điều đó, chúng ta có thể áp dụng đa hình bên trong lớp `Company`, xử lý các đối tượng nhân viên khác nhau thông qua `interface` `Employee`.
+Áp dụng tính đa hình giúp chúng ta đơn giản hóa mã, nhưng phần còn lại của lớp `Company` vẫn phụ thuộc vào các lớp `employee` cụ thể
 
 ```cpp
 
@@ -430,11 +430,11 @@ Bằng cách này, bạn vừa thấy áp dụng một mẫu thiết kế trong 
 
 > Inheritance is probably the most obvious and easy way of reusing code between classes. You have two classes with the same code. Create a common base class for these two and move the similar code into it. Piece of cake!
 
-Kế thừa có lẽ là cách dễ nhìn và dễ dàng nhất để tái sử dụng mã giữa các lớp. Bạn có hai lớp với cùng mã. Tạo một lớp cơ sở chung cho hai lớp này và di chuyển mã tương tự vào đó. Dễ như ăn bánh!
+**Kế thừa** có lẽ là cách rõ ràng và dễ dàng nhất để tái sử dụng mã giữa các lớp. Bạn có hai classes với code giống nhau. Tạo một lớp cơ sở chung cho hai lớp này và chuyển phần code giống nhau vào đó. Dễ như ăn bánh!
 
 > Unfortunately, inheritance comes with caveats that often become apparent only after your program already has tons of classes and changing anything is pretty hard. Here’s a list of those problems.
 
-Thật không may, kế thừa đi kèm với những lưu ý mà thường chỉ trở nên rõ ràng sau khi chương trình của bạn đã có hàng tấn lớp và thay đổi bất kỳ điều gì cũng khá khó khăn. Dưới đây là một danh sách các vấn đề đó.
+Thật không may, kế thừa đi kèm với những lưu ý mà thường chỉ trở nên rõ ràng sau khi chương trình của bạn đã có nhiều classes và thay đổi bất kỳ điều gì cũng khá khó khăn. Dưới đây là một danh sách các vấn đề đó.
 
 > - **A subclass can’t reduce the interface of the superclass**. You have to implement all abstract methods of the parent class even if you won’t be using them.
 > - **When overriding methods you need to make sure that the new behavior is compatible with the base one**. It’s important because objects of the subclass may be passed to any code that expects objects of the superclass and you don’t want that code to break.
@@ -444,15 +444,31 @@ Thật không may, kế thừa đi kèm với những lưu ý mà thường ch�
 > There’s an alternative to inheritance called composition. Whereas inheritance represents the “is a” relationship between classes (a car is a transport), composition represents the “has a” relationship (a car has an engine). <br>
 > I should mention that this principle also applies to aggregation—a more relaxed variant of composition where one object may have a reference to the other one but doesn’t manage its lifecycle. Here’s an example: a car has a driver, but he or she may use another car or just walk without the car 
 
-- **Một lớp con không thể giảm giao diện của lớp cha**. Bạn phải triển khai tất cả các phương thức trừu tượng của lớp cha ngay cả khi bạn không sử dụng chúng.
-
-
-- **Khi ghi đè phương thức, bạn cần đảm bảo rằng hành vi mới tương thích với hành vi cơ bản**. Điều này quan trọng vì các đối tượng của lớp con có thể được chuyển đến bất kỳ mã nào mong đợi các đối tượng của lớp cha và bạn không muốn mã đó bị hỏng.
+- **Một lớp con không thể giảm `interface` của lớp cha**. Bạn phải triển khai tất cả các phương thức trừu tượng của lớp cha ngay cả khi bạn không sử dụng chúng.
+- **Khi ghi đè phương thức, bạn cần đảm bảo rằng hành vi mới tương thích với hành vi cơ bản**. Điều này quan trọng vì các đối tượng của lớp con có thể được chuyển đến bất kỳ code nào mong đợi các objects của lớp cha và bạn không muốn code đó bị hỏng.
 - **Kế thừa phá vỡ tính đóng gói của lớp cha** vì các chi tiết nội bộ của lớp cha trở nên có sẵn cho lớp con. Có thể có tình huống ngược lại khi một lập trình viên làm cho lớp cha nhận thức về một số chi tiết của các lớp con vì lợi ích của việc mở rộng tiếp theo dễ dàng hơn.
 - **Lớp con được liên kết chặt chẽ với lớp cha**. Bất kỳ thay đổi nào trong lớp cha cũng có thể làm hỏng chức năng của lớp con.
 - **Cố gắng tái sử dụng mã thông qua kế thừa có thể dẫn đến việc tạo ra các cấu trúc kế thừa song song**. Kế thừa thường diễn ra trong một chiều. Nhưng mỗi khi có hai hoặc nhiều chiều, bạn phải tạo ra nhiều kết hợp lớp, làm phình to cấu trúc lớp thành một kích thước ngớ ngẩn. <br>
 - Có một phương án thay thế cho kế thừa gọi là `composition`. Trong khi kế thừa đại diện cho mối quan hệ “là một” giữa các lớp (một chiếc xe là một phương tiện), `composition` đại diện cho mối quan hệ “có một” (một chiếc xe có một động cơ). <br>
 - Tôi nên đề cập rằng nguyên tắc này cũng áp dụng cho `aggregation`—một biến thể linh hoạt hơn của `composition` nơi một đối tượng có thể có một tham chiếu đến đối tượng khác nhưng không quản lý vòng đời của nó. Dưới đây là một ví dụ: một chiếc xe có một tài xế, nhưng anh ấy hoặc cô ấy có thể sử dụng một chiếc xe khác hoặc chỉ đi bộ mà không cần xe
+
+### Example 
+
+```plantuml
+@startuml
+    skinparam backgroundColor #EEEBDC
+    skinparam handwritten true
+    actor Customer
+    Customer -> "login()" : username & password
+    "login()" -> Customer : session token
+    activate "login()"
+    Customer -> "placeOrder()" : session token, order info
+    "placeOrder()" -> Customer : ok
+    Customer -> "logout()"
+    "logout()" -> Customer : ok
+    deactivate "login()"
+@enduml
+```
 
 ----
 
