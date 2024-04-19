@@ -1,9 +1,9 @@
 # Site settings
-title: NAB Blog
-SEOTitle: NAB Blog
+title: nabang1010 Blog
+SEOTitle: nabang1010 Blog
 header-img: img/home-bg-3.jpg
-email: nab1010.work@gmail.com
-description: "NAB Blog | Machine Learning, Deeplearning, Computer Vision | This is NAB's personal blog"
+email: nabang1010.work@gmail.com
+description: "nabang1010 Blog | Machine Learning, Deeplearning, Computer Vision | This is NAB's personal blog"
 keyword: "nabblog,nabang1010.com,machinelearning,deeplearning,tri tue nhan tao,hoc sau,machine learning,deep learning,ai blog,thi giac may tinh,computer vision,ai viet nam,train google colab"
 url: "https://nabang1010.com"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'

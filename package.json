@@ -1,9 +1,9 @@
 {
-    "name": "nab-blog",
-    "title": "NAB Blog",
-    "author": "NAB <nab1010.work@gmail.com>",
+    "name": "nabang1010-blog",
+    "title": "nabang1010 Blog",
+    "author": "nabang1010 <nabang1010.work@gmail.com>",
     "version": "1.7.0",
-    "homepage": "https://nab1010.github.io",
+    "homepage": "https://nabang1010.com",
     "repository": {
         "type": "git",
         "url": "https://github.com/nab1010/nab1010.github.io"
