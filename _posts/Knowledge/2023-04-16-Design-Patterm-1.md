@@ -83,6 +83,9 @@ Ngoài ra, tất cả các `patterm` có thể được phân loại theo mục 
 
 # Who invented patterns?
 
+
+# Why Should I Learn Patterns?
+
 ----
 
 # References
