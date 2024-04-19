@@ -57,7 +57,7 @@ Mỗi lập trình viên phần mềm có hàng chục câu chuyện tương t�
 
 > First, we understand the problem better once we start to solve it. Often by the time you finish the first version of an app, you’re ready to rewrite it from scratch because now you under- stand many aspects of the problem much better. You have also grown professionally, and your own code now looks like crap.
 
-Đầu tiên, chúng ta hiểu vấn đề tốt hơn khi bắt đầu giải quyết nó. Thường vào lúc bạn hoàn thành phiên bản đầu tiên của một ứng dụng, bạn sẵn sàng viết lại từ đầu vì bây giờ bạn hiểu rõ nhiều khía cạnh của vấn đề hơn nhiều. Bạn cũng đã phát triển chuyên môn, và mã của riêng bạn bây giờ trông như rác.
+Đầu tiên, chúng ta hiểu vấn đề tốt hơn khi bắt đầu giải quyết nó. Thường vào lúc bạn hoàn thành phiên bản đầu tiên của một ứng dụng, bạn sẵn sàng viết lại từ đầu vì bây giờ bạn hiểu rõ nhiều khía cạnh của vấn đề hơn nhiều. Bạn cũng đã phát triển một cách chuyên nghiệp và mã của riêng bạn bây giờ trông thật tệ.
 
 > Something beyond your control has changed. This is why so many dev teams pivot from their original ideas into something new. Everyone who relied on Flash in an online application has been reworking or migrating their code as browser after browser drops support for Flash.
 
