@@ -158,13 +158,273 @@ Khi bạn muốn làm cho hai lớp làm việc với nhau, bạn có thể bắ
 > 4. Now make the second class dependent on this interface rather than on the concrete class. You still can make it work with objects of the original class, but the connection is now much more flexible
 
 1. Xác định chính xác một đối tượng cần gì từ đối tượng khác: phương thức nào nó thực thi?
-2. Mô tả các phương thức này trong một `interface` hoặc lớp trừu tượng mới.
-3. Làm cho lớp đó là một phụ thuộc thực hiện `interface` này.
+2. Mô tả các phương thức này trong một `interface` hoặc lớp `abstract` mới.
+3. Làm cho lớp đó là một dependency implement của `interface` này.
 4. Bây giờ làm cho lớp thứ hai phụ thuộc vào `interface` này thay vì vào lớp cụ thể. Bạn vẫn có thể làm cho nó hoạt động với các đối tượng của lớp ban đầu, nhưng kết nối bây giờ linh hoạt hơn nhiều
 
-> After making this change, you won’t probably feel any immedi- ate benefit. On the contrary, the code has become more complicated than it was before. However, if you feel that this might be a good extension point for some extra functionality, or that some other people who use your code might want to extend it here, then go for it. 
+**BEFORE**
+
+```cpp
+
+class Cat {
+  public:
+    int energy;
+    void eat(Sausage s) {
+      // eat sausage
+    }
+}
+
+class Sausage {
+private:  
+  float nutrition = 10.0;
+  int expiration = 30;
+
+public:
+  float getNutrition() {
+    // return nutrition of sausage
+    return this->nutrition;
+  }
+
+  int getExpiration() {
+    // return expiration date of sausage
+    return this->expiration;
+  }
+}
+
+```
+**AFTER**
+
+```cpp
+
+class Cat {
+  public:
+    int energy;
+    void eat(Food s) {
+      // eat sausage
+    }
+}
+// create a new interface Food
+class Food {
+  public:
+    virtual float getNutrition() = 0;
+}
+
+// create a new class Sausage that implements Food
+class Sausage : public Food {
+
+private:  
+  float nutrition = 10.0;
+  int expiration = 30;
+
+public:
+  float getNutrition() {
+    // return nutrition of sausage
+    return this->nutrition;
+  }
+
+  int getExpiration() {
+    // return expiration date of sausage
+    return this->expiration;
+  }
+
+}
+
+```
+> After making this change, you won’t probably feel any immediate benefit. On the contrary, the code has become more complicated than it was before. However, if you feel that this might be a good extension point for some extra functionality, or that some other people who use your code might want to extend it here, then go for it. 
 
 Sau khi thực hiện thay đổi này, bạn có thể không cảm thấy bất kỳ lợi ích nào ngay lập tức. Ngược lại, mã đã trở nên phức tạp hơn so với trước đây. Tuy nhiên, nếu bạn cảm thấy rằng điều này có thể là một điểm mở rộng tốt cho một số chức năng bổ sung, hoặc rằng một số người khác sử dụng mã của bạn có thể muốn mở rộng nó ở đây, thì hãy thử.
+
+
+### Example 
+
+> Let’s look at another example which illustrates that working with objects through interfaces might be more beneficial than depending on their concrete classes. Imagine that you’re creating a software development company simulator. You have different classes that represent various employee types.
+
+Hãy xem một ví dụ khác mà minh họa rằng làm việc với các đối tượng thông qua các `interface` có thể hữu ích hơn so với phụ thuộc vào các lớp cụ thể của chúng. Hãy tưởng tượng rằng bạn đang tạo một trình mô phỏng công ty phát triển phần mềm. Bạn có các lớp khác nhau đại diện cho các loại nhân viên khác nhau.
+
+**BEFORE:**  all classes are tightly coupled.
+
+```cpp
+class Designer {
+public:
+  void designArchitecture() {
+    // design architecture
+  }
+}
+
+class Programmer {
+public:
+  void writeCode() {
+    // write code
+  }
+}
+
+class Tester {
+public:
+  void testSoftware() {
+    // test software
+  }
+}
+
+class Company {
+public:
+  void createSoftware() {
+    Designer d = new Designer();
+    d.designArchitecture();
+    Programmer p = new Programmer();
+    p.writeCode();
+    Tester t = new Tester();
+    t.testSoftware();
+  }
+}
+
+```
+
+> In the beginning, the `Company` class is tightly coupled to concrete classes of employees. However, despite the difference in their implementations, we can generalize various work-related methods and then extract a common interface for all employee classes
+
+Ban đầu, lớp `Company` được liên kết chặt chẽ với các lớp cụ thể của nhân viên. Tuy nhiên, mặc dù có sự khác biệt trong cài đặt của họ, chúng ta có thể tổng quát hóa các phương thức liên quan đến công việc và sau đó trích xuất một `interface` chung cho tất cả các lớp nhân viên
+
+> After doing that, we can apply polymorphism inside the `Company` class, treating various employee objects via the `Employee` interface.
+
+Sau khi làm điều đó, chúng ta có thể áp dụng đa hình bên trong lớp `Company`, xử lý các đối tượng nhân viên khác nhau thông qua `interface` `Employee`.
+
+**AFTER:**  polymorphism helped us simplify the code, but the rest of the `Company` class still depends on the concrete `employee` classes
+
+Sau khi làm điều đó, chúng ta có thể áp dụng đa hình bên trong lớp `Company`, xử lý các đối tượng nhân viên khác nhau thông qua `interface` `Employee`.
+
+```cpp
+
+class Employee {
+public:
+  virtual void doWork() = 0;
+}
+
+class Designer : public Employee {
+public:
+  void doWork() {
+    // design architecture
+  }
+}
+
+class Programmer : public Employee {
+public:
+  void doWork() {
+    // write code
+  }
+}
+
+class Tester : public Employee {
+public:
+  void doWork() {
+    // test software
+  }
+}
+
+class Company {
+public:
+  void createSoftware() {
+    std::vector<Employee> employees = [
+      new Designer(), 
+      new Programmer(), 
+      new Tester()
+    ];
+
+    for (Employee e : employees) {
+      e.doWork();
+    }
+  }
+}
+
+```
+
+> The `Company` class remains coupled to the employee classes. This is bad because if we introduce new types of companies that work with other types of employees, we’ll need to override most of the `Company` class instead of reusing that code.
+
+Lớp `Company` vẫn liên kết với các lớp nhân viên. Điều này không tốt vì nếu chúng ta giới thiệu các loại công ty mới làm việc với các loại nhân viên khác, chúng ta sẽ cần ghi đè hầu hết lớp `Company` thay vì tái sử dụng mã đó.
+ 
+> To solve this problem, we could declare the method for getting `employees` as abstract. Each concrete company will implement this method differently, creating only those employees that it needs.
+
+Để giải quyết vấn đề này, chúng ta có thể khai báo phương thức để lấy `employees` là trừu tượng. Mỗi công ty cụ thể sẽ triển khai phương thức này theo cách khác nhau, tạo ra chỉ những nhân viên mà nó cần.
+
+**AFTER:**  the primary method of the `Company` class is independent from concrete employee classes. Employee objects are created in concrete company subclasses
+
+Sau khi thực hiện thay đổi này, phương thức chính của lớp `Company` không phụ thuộc vào các lớp nhân viên cụ thể. Các đối tượng nhân viên được tạo trong các lớp con công ty cụ thể
+
+```cpp
+class Employee {
+public:
+  virtual void doWork() = 0;
+}
+
+class Designer : public Employee {
+public:
+  void doWork() {
+    // design architecture
+  }
+}
+
+class Programmer : public Employee {
+public:
+  void doWork() {
+    // write code
+  }
+}
+
+class Tester : public Employee {
+public:
+  void doWork() {
+    // test software
+  }
+}
+
+class Artist : public Employee {
+public:
+  void doWork() {
+    // draw pictures
+  }
+}
+
+class Company {
+public:
+  virtual std::vector<Employee> getEmployees() = 0;
+
+  void createSoftware() {
+    std::vector<Employee> employees = getEmployees();
+
+    for (Employee e : employees) {
+      e.doWork();
+    }
+  }
+}
+
+class GameDevCompany {
+public:
+  std::vector<Employee> getEmployees() {
+    return [
+      new Designer(), 
+      new Programmer(), 
+      new Artist()
+    ];
+  }
+}
+
+class OutsourcingCompany {
+public:
+  std::vector<Employee> getEmployees() {
+    return [
+      new Programmer(), 
+      new Tester()
+    ];
+  }
+}
+
+```
+
+> After this change, the Company class has become independent from various employee classes. Now you can extend this class and introduce new types of companies and employees while still reusing a portion of the base company class. Extending the base company class doesn’t break any existing code that already relies on it.
+
+Sau thay đổi này, lớp `Company` đã trở nên độc lập với các lớp nhân viên khác nhau. Bây giờ bạn có thể mở rộng lớp này và giới thiệu các loại công ty và nhân viên mới trong khi vẫn tái sử dụng một phần của lớp công ty cơ sở. Mở rộng lớp công ty cơ sở không làm hỏng bất kỳ mã hiện tại nào đã phụ thuộc vào nó.
+
+> By the way, you’ve just seen applying a design pattern in action! That was an example of the **Factory Method** pattern. Don’t worry: we’ll discuss it later in detail.
+
+Bằng cách này, bạn vừa thấy áp dụng một mẫu thiết kế trong thực tế! Đó là một ví dụ về mẫu **Factory Method**. Đừng lo lắng: chúng ta sẽ thảo luận về nó sau này một cách chi tiết.
 
 ## Favor Composition Over Inheritance (Ưu tiên `composition` hơn là `inheritance`)
 
@@ -185,6 +445,8 @@ Thật không may, kế thừa đi kèm với những lưu ý mà thường ch�
 > I should mention that this principle also applies to aggregation—a more relaxed variant of composition where one object may have a reference to the other one but doesn’t manage its lifecycle. Here’s an example: a car has a driver, but he or she may use another car or just walk without the car 
 
 - **Một lớp con không thể giảm giao diện của lớp cha**. Bạn phải triển khai tất cả các phương thức trừu tượng của lớp cha ngay cả khi bạn không sử dụng chúng.
+
+
 - **Khi ghi đè phương thức, bạn cần đảm bảo rằng hành vi mới tương thích với hành vi cơ bản**. Điều này quan trọng vì các đối tượng của lớp con có thể được chuyển đến bất kỳ mã nào mong đợi các đối tượng của lớp cha và bạn không muốn mã đó bị hỏng.
 - **Kế thừa phá vỡ tính đóng gói của lớp cha** vì các chi tiết nội bộ của lớp cha trở nên có sẵn cho lớp con. Có thể có tình huống ngược lại khi một lập trình viên làm cho lớp cha nhận thức về một số chi tiết của các lớp con vì lợi ích của việc mở rộng tiếp theo dễ dàng hơn.
 - **Lớp con được liên kết chặt chẽ với lớp cha**. Bất kỳ thay đổi nào trong lớp cha cũng có thể làm hỏng chức năng của lớp con.
