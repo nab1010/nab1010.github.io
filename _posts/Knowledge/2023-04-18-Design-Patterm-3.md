@@ -60,7 +60,7 @@ class Item {
     int quantity;
 }
 
-class Oder {
+class Order {
   public:
     std::vector<Item> lineItems;
     std::string country;
@@ -98,7 +98,7 @@ class Item {
     int quantity;
 }
 
-class Oder {
+class Order {
   public:
     std::vector<Item> lineItems;
     std::string country;
