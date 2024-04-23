@@ -422,9 +422,9 @@ public:
 
 Sau thay đổi này, lớp `Company` đã trở nên độc lập với các lớp nhân viên khác nhau. Bây giờ bạn có thể mở rộng lớp này và giới thiệu các loại công ty và nhân viên mới trong khi vẫn tái sử dụng một phần của lớp công ty cơ sở. Mở rộng lớp công ty cơ sở không làm hỏng bất kỳ mã hiện tại nào đã phụ thuộc vào nó.
 
-> By the way, you’ve just seen applying a design pattern in action! That was an example of the **Factory Method** pattern. Don’t worry: we’ll discuss it later in detail.
+> By the way, you’ve just seen applying a design pattern in action! That was an example of the **`Factory` Method** pattern. Don’t worry: we’ll discuss it later in detail.
 
-Bằng cách này, bạn vừa thấy áp dụng một mẫu thiết kế trong thực tế! Đó là một ví dụ về mẫu **Factory Method**. Đừng lo lắng: chúng ta sẽ thảo luận về nó sau này một cách chi tiết.
+Bằng cách này, bạn vừa thấy áp dụng một mẫu thiết kế trong thực tế! Đó là một ví dụ về mẫu **`Factory` Method**. Đừng lo lắng: chúng ta sẽ thảo luận về nó sau này một cách chi tiết.
 
 ## Favor Composition Over Inheritance (Ưu tiên `composition` hơn là `inheritance`)
 
@@ -566,7 +566,7 @@ public:
 ```
 > This structure of classes resembles the Strategy pattern, which we’ll go over later in this book.
 
-Cấu trúc của các lớp này giống với mẫu `Strategy`, mà chúng ta sẽ xem xét sau trong cuốn sách này.
+Cấu trúc của các lớp này giống với mẫu **`Strategy`**, mà chúng ta sẽ xem xét sau trong cuốn sách này.
 
 
 ----
