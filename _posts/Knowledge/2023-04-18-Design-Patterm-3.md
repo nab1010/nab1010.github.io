@@ -461,9 +461,112 @@ Thật không may, kế thừa đi kèm với những lưu ý mà thường ch�
 - **Line with a filled diamond at the container end and an simple arrow at the end pointing toward the component:** Đường thẳng với một hình kim cương được điền ở đầu chứa và một mũi tên ở cuối chỉ về phần tử. `Composition` relationship.
 - **Line with a empty diamond at the container end and an simple arrow at the end pointing toward the component:** Đường thẳng với một hình kim cương trống ở đầu chứa và một mũi tên ở cuối chỉ về phần tử. `Aggregation` relationship.
 
+```cpp
+
+class Transport {
+}
+
+class Truck : public Transport {
+}
+
+class Car : public Transport {
+}
+
+class ElectricTruck : public Truck {
+}
+
+class CombustionEngineTruck : public Truck {
+}
+
+class ElectricCar : public Car {
+}
+
+class CombustionEngineCar : public Car {
+}
+
+class AutopilotElectricTruck : public ElectricTruck {
+}
+
+class AutopilotElectricCar : public ElectricCar {
+}
+
+class AutopilotCombustionEngineTruck : public CombustionEngineTruck {
+}
+
+class AutopilotCombustionEngineCar : public CombustionEngineCar {
+}
+
+```
+
+
+
+
+
 > As you see, each additional parameter results in multiplying the number of subclasses. There’s a lot of duplicate code between subclasses because a subclass can’t extend two classes at the same time
 
 Như bạn thấy, mỗi tham số bổ sung dẫn đến việc nhân số lượng lớp con. Có rất nhiều mã trùng lặp giữa các lớp con vì một lớp con không thể mở rộng hai lớp cùng một lúc
+
+> You can solve this problem with composition. Instead of car objects implementing a behavior on their own, they can delegate it to other objects.
+
+Bạn có thể giải quyết vấn đề này với `composition`. Thay vì các đối tượng xe thực hiện một hành vi trên chính họ, chúng có thể ủy quyền nó cho các đối tượng khác.
+
+> The added benefit is that you can replace a behavior at runtime. For instance, you can replace an engine object linked to a car object just by assigning a different engine object to the car.
+
+Lợi ích được thêm vào là bạn có thể thay thế một hành vi tại thời gian chạy. Ví dụ, bạn có thể thay thế một đối tượng động cơ liên kết với một đối tượng xe chỉ bằng cách gán một đối tượng động cơ khác cho xe.
+
+```cpp
+
+class Transport {
+private:
+  Engine engine;
+  Driver driver;
+public:
+  void deliver(destination, cargo) {
+  }
+}
+class Engine {
+public:
+  virtual void move() = 0;
+}
+
+class Driver {
+public:
+  virtual void navigate() = 0;
+}
+
+class CombustionEngine : public Engine {
+public:
+  void move() {
+    // move with combustion engine
+  }
+}
+
+
+class ElectricEngine : public Engine {
+public:
+  void move() {
+    // move with electric engine
+  }
+}
+
+class Robot : public Driver {
+public:
+  void navigate() {
+    // navigate with robot
+  }
+}
+
+class Human : public Driver {
+public:
+  void navigate() {
+    // navigate with human
+  }
+}
+
+```
+> This structure of classes resembles the Strategy pattern, which we’ll go over later in this book.
+
+Cấu trúc của các lớp này giống với mẫu `Strategy`, mà chúng ta sẽ xem xét sau trong cuốn sách này.
 
 
 ----
